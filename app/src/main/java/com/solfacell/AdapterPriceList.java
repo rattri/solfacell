@@ -9,12 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.solfacell.model.PriceList;
+
 import java.util.ArrayList;
+import java.util.List;
 
 public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.ViewHolder> {
-    private ArrayList<PriceList> voucher;
+    private List<PriceList.Voucher> voucher;
 
-    public AdapterPriceList(ArrayList<PriceList> voucher) {
+    public AdapterPriceList(List<PriceList.Voucher> voucher) {
         this.voucher = voucher;
     }
 
@@ -28,8 +31,9 @@ public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.View
     public void onBindViewHolder(AdapterPriceList.ViewHolder viewHolder, int i) {
         String idr;
         idr="IDR ";
-        viewHolder.tv_nama.setText(idr+voucher.get(i).getNama());
-        viewHolder.tv_harga.setText(voucher.get(i).getHarga());
+        PriceList.Voucher vcr = voucher.get(i);
+        viewHolder.tv_nama.setText(vcr.getNama());
+        viewHolder.tv_harga.setText(vcr.getHarga());
 
 
     }

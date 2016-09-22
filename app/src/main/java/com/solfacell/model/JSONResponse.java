@@ -1,4 +1,4 @@
-package com.solfacell;
+package com.solfacell.model;
 
 /**
  * Created by Ratri on 9/22/2016.

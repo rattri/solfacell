@@ -9,8 +9,12 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 
+import com.solfacell.model.JSONResponse;
+import com.solfacell.model.PriceList;
+
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -21,7 +25,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class PriceListActivity extends AppCompatActivity {
 
     private RecyclerView recyclerView;
-    private ArrayList<PriceList> data;
+    private List<PriceList.Voucher> data;
     private AdapterPriceList adapter;
 
     @Override
@@ -34,6 +38,7 @@ public class PriceListActivity extends AppCompatActivity {
     private void initViews() {
         recyclerView = (RecyclerView) findViewById(R.id.recycler_view);
         recyclerView.setHasFixedSize(true);
+        data = new ArrayList<>();
         RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(layoutManager);
         loadJSON();
@@ -45,20 +50,22 @@ public class PriceListActivity extends AppCompatActivity {
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
         RequestInterface request = retrofit.create(RequestInterface.class);
-        Call<JSONResponse> call = request.getJSON();
-        call.enqueue(new Callback<JSONResponse>() {
+        Call<PriceList> call = request.getPrice("0");
+        call.enqueue(new Callback<PriceList>() {
             @Override
-            public void onResponse(Call<JSONResponse> call, Response<JSONResponse> response) {
+            public void onResponse(Call<PriceList> call, Response<PriceList> response) {
+                data = response.body().getVoucher();
+                for(PriceList.Voucher voucher : data){
+                    System.out.println(voucher.getNama());
+                }
 
-                JSONResponse jsonResponse = response.body();
-                data = new ArrayList<>(Arrays.asList(jsonResponse.getVoucher()));
                 adapter = new AdapterPriceList(data);
                 recyclerView.setAdapter(adapter);
             }
 
             @Override
-            public void onFailure(Call<JSONResponse> call, Throwable t) {
-                Log.d("Error", t.getMessage());
+            public void onFailure(Call<PriceList> call, Throwable t) {
+
             }
         });
     }
