@@ -1,20 +1,13 @@
-package com.solfacell;
+package com.solfacell.fragments;
 
-import android.content.Intent;
-import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.widget.ArrayAdapter;
-import android.app.Activity;
-import com.solfacell.R;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
 import android.support.v7.widget.GridLayoutManager;
@@ -23,11 +16,10 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.content.res.Resources;
 import android.graphics.Rect;
 import android.util.TypedValue;
-import android.widget.ImageView;
-import android.widget.TextView;
-import android.widget.Toast;
 
-import com.bumptech.glide.Glide;
+import com.solfacell.R;
+import com.solfacell.adapter.VoucherAdapter;
+import com.solfacell.model.Voucher;
 
 /**
  * Created by Ratri on 9/15/2016.

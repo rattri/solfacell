@@ -1,4 +1,4 @@
-package com.solfacell;
+package com.solfacell.adapter;
 
 /**
  * Created by Ratri on 9/20/2016.
@@ -9,9 +9,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+import com.solfacell.R;
 import com.solfacell.model.PriceList;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.ViewHolder> {

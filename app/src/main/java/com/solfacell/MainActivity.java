@@ -13,23 +13,18 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
-import android.os.Bundle;
 import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.Toolbar;
 
 import java.util.ArrayList;
 import java.util.List;
 
-import com.solfacell.R;
-import com.solfacell.GameFragments;
-import com.solfacell.PaketFragments;
-import com.solfacell.PulsaFragments;
-import com.solfacell.PlnFragments;
+import com.solfacell.fragments.GameFragments;
+import com.solfacell.fragments.PlnFragments;
+import com.solfacell.fragments.PulsaFragments;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
