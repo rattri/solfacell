@@ -164,7 +164,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.beranda) {
             // Handle the camera action
         } else if (id == R.id.login) {
-            Intent i = new Intent(this,  PriceListActivity.class);
+            Intent i = new Intent(this,  LoginActivity.class);
             startActivity(i);
         }
 
