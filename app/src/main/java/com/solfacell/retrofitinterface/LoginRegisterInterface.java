@@ -7,13 +7,14 @@ package com.solfacell.retrofitinterface;
 import com.solfacell.model.ServerRequest;
 import com.solfacell.model.ServerResponse;
 
+
 import retrofit2.Call;
 import retrofit2.http.Body;
 import retrofit2.http.POST;
 
-public interface LoginRegister {
+public interface LoginRegisterInterface {
 
-    @POST("")
+    @POST("login-register/")
     Call<ServerResponse> operation(@Body ServerRequest request);
 
 }

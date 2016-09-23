@@ -1,14 +1,16 @@
-package com.solfacell.constantclass;
+package com.solfacell;
 
 /**
  * Created by Ratri on 9/23/2016.
  */
-public class ConstanLoginRegister {
+public class Constants {
 
         public static final String BASE_URL = "http://solfacell.solfagaming.com/";
         public static final String REGISTER_OPERATION = "register";
         public static final String LOGIN_OPERATION = "login";
         public static final String CHANGE_PASSWORD_OPERATION = "chgPass";
+        public static final String RESET_PASSWORD_INITIATE = "resPassReq";
+        public static final String RESET_PASSWORD_FINISH = "resPass";
 
         public static final String SUCCESS = "success";
         public static final String FAILURE = "failure";
@@ -19,6 +21,5 @@ public class ConstanLoginRegister {
         public static final String UNIQUE_ID = "unique_id";
 
         public static final String TAG = "Learn2Crack";
+
 }
-
-
