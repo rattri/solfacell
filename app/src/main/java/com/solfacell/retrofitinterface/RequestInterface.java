@@ -1,4 +1,4 @@
-package com.solfacell;
+package com.solfacell.retrofitinterface;
 
 /**
  * Created by Ratri on 9/22/2016.
