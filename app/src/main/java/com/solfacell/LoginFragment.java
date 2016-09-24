@@ -2,6 +2,7 @@ package com.solfacell;
 
 import android.app.Fragment;
 import android.app.FragmentTransaction;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -45,7 +46,8 @@ public class LoginFragment extends Fragment implements View.OnClickListener{
 
     private void initViews(View view){
 
-        pref = getActivity().getPreferences(0);
+//        pref = getActivity().getPreferences(0);
+        pref = getActivity().getSharedPreferences(Constants.LOGIN_OPERATION, Context.MODE_PRIVATE);
 
         btn_login = (AppCompatButton)view.findViewById(R.id.btn_login);
         tv_register = (TextView)view.findViewById(R.id.tv_register);

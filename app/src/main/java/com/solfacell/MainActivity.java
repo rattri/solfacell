@@ -1,10 +1,12 @@
 package com.solfacell;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.util.Log;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private SharedPreferences pref;
+    private MenuItem login;
 
     private int[] tabIcons = {
 
@@ -52,8 +55,8 @@ public class MainActivity extends AppCompatActivity
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        pref = getPreferences(0);
-
+//        pref = getPreferences(0);
+        pref = getSharedPreferences(Constants.LOGIN_OPERATION, Context.MODE_PRIVATE);
 
         viewPager = (ViewPager) findViewById(R.id.viewpager);
         setupViewPager(viewPager);
@@ -78,7 +81,10 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        login = navigationView.getMenu().getItem(1);
         navigationView.setNavigationItemSelectedListener(this);
+
+        setupUserLogined();
 
     }
 
@@ -172,6 +178,22 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        setupUserLogined();
+    }
+
+    private void setupUserLogined(){
+        if (!pref.getBoolean(Constants.IS_LOGGED_IN, false)) {
+           Log.d("Main Activity", "not register");
+            return;
+        }
+
+        login.setTitle(pref.getString(Constants.NAME, ""));
+
     }
 
 
