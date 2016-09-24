@@ -23,6 +23,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.view.ViewGroup;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -39,9 +40,10 @@ public class MainActivity extends AppCompatActivity
     private TabLayout tabLayout;
     private ViewPager viewPager;
     private SharedPreferences pref;
-    private MenuItem login;
     public TextView yourname;
     public TextView welcome;
+
+    NavigationView navigationView;
 
     private int[] tabIcons = {
 
@@ -69,7 +71,6 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
 
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -85,12 +86,22 @@ public class MainActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
-        login = navigationView.getMenu().getItem(1);
+
+        navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+        View header = navigationView.getHeaderView(0);
+        welcome = (TextView) header.findViewById(R.id.welcome);
+        setupMenuView();
+    }
 
-
-
+    private void setupMenuView(){
+        if (!pref.getBoolean(Constants.IS_LOGGED_IN, false)) {
+            navigationView.inflateMenu(R.menu.login);
+            welcome.setText("Kamu belum login");
+        } else {
+            navigationView.inflateMenu(R.menu.activity_main_login);
+            welcome.setText("Selamat Datang "+ pref.getString(Constants.NAME, ""));
+        }
     }
 
     private void setupTabIcons() {
@@ -151,27 +162,8 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        TextView yourname = (TextView) findViewById(R.id.yourname);
-        TextView welcome = (TextView) findViewById(R.id.welcome);
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
-        MenuItem item = menu.findItem(R.id.login);
-
-        if (!pref.getBoolean(Constants.IS_LOGGED_IN, false)) {
-
-            for (int i = 1; i<5; i++ )
-                menu.getItem(i).setVisible(false);
-            welcome.setText("Kamu belum login");
-            return true;
-        }
-        else{
-        // Inflate the menu; this adds items to the action bar if it is present.
-            menu.findItem(R.id.login).setVisible(false);
-            welcome.setText(   "Selamat Datang "+ pref.getString(Constants.NAME, ""));
-        return true;}
+        return false;
     }
-
-
 
     @SuppressWarnings("StatementWithEmptyBody")
     @Override
