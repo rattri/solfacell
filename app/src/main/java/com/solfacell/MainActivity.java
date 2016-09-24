@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.util.Log;
+import android.view.MenuInflater;
 import android.view.View;
 import android.support.design.widget.NavigationView;
 import android.support.v4.view.GravityCompat;
@@ -22,6 +23,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
+import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -38,6 +40,8 @@ public class MainActivity extends AppCompatActivity
     private ViewPager viewPager;
     private SharedPreferences pref;
     private MenuItem login;
+    public TextView yourname;
+    public TextView welcome;
 
     private int[] tabIcons = {
 
@@ -65,6 +69,7 @@ public class MainActivity extends AppCompatActivity
         tabLayout.setupWithViewPager(viewPager);
         setupTabIcons();
 
+
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -84,7 +89,7 @@ public class MainActivity extends AppCompatActivity
         login = navigationView.getMenu().getItem(1);
         navigationView.setNavigationItemSelectedListener(this);
 
-        setupUserLogined();
+
 
     }
 
@@ -146,18 +151,24 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        if (pref.getBoolean(Constants.IS_LOGGED_IN, false)) {
+        TextView yourname = (TextView) findViewById(R.id.yourname);
+        TextView welcome = (TextView) findViewById(R.id.welcome);
+        // Inflate the menu; this adds items to the action bar if it is present.
+        getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
+        MenuItem item = menu.findItem(R.id.login);
 
-            // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.activity_main_drawer, menu);
+        if (!pref.getBoolean(Constants.IS_LOGGED_IN, false)) {
 
-            return true;
-        } else {
-            // Inflate the menu; this adds items to the action bar if it is present.
-            getMenuInflater().inflate(R.menu.activity_main_login, menu);
-
+            for (int i = 1; i<5; i++ )
+                menu.getItem(i).setVisible(false);
+            welcome.setText("Kamu belum login");
             return true;
         }
+        else{
+        // Inflate the menu; this adds items to the action bar if it is present.
+            menu.findItem(R.id.login).setVisible(false);
+            welcome.setText(   "Selamat Datang "+ pref.getString(Constants.NAME, ""));
+        return true;}
     }
 
 
@@ -180,21 +191,8 @@ public class MainActivity extends AppCompatActivity
         return true;
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        setupUserLogined();
-    }
 
-    private void setupUserLogined(){
-        if (!pref.getBoolean(Constants.IS_LOGGED_IN, false)) {
-           Log.d("Main Activity", "not register");
-            return;
-        }
 
-        login.setTitle(pref.getString(Constants.NAME, ""));
-
-    }
 
 
 }
