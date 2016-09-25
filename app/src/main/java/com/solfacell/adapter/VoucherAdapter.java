@@ -81,9 +81,6 @@ public class VoucherAdapter extends RecyclerView.Adapter<VoucherAdapter.MyViewHo
 
     }
 
-
-
-
     @Override
     public int getItemCount() {
         return voucherList.size();

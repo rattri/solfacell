@@ -5,6 +5,7 @@ package com.solfacell.adapter;
  */
 import android.app.Activity;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -22,9 +23,11 @@ import java.util.List;
 public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.ViewHolder> {
     private List<PriceList.Voucher> voucher;
     private PriceListActivity mContext;
-
+    private String harga;
+    private String nama;
     public AdapterPriceList(List<PriceList.Voucher> voucher) {
         this.voucher = voucher;
+
     }
 
     @Override
@@ -40,6 +43,8 @@ public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.View
         PriceList.Voucher vcr = voucher.get(i);
         viewHolder.tv_nama.setText("IDR "+vcr.getNama());
         viewHolder.tv_harga.setText("Rp "+vcr.getHarga());
+        nama = vcr.getNama();
+        harga = vcr.getHarga();
 
 
 
@@ -58,6 +63,7 @@ public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.View
 
             tv_nama = (TextView)view.findViewById(R.id.text_nama);
             tv_harga = (TextView)view.findViewById(R.id.text_harga);
+
 
 
 
