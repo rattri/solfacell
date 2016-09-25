@@ -13,6 +13,7 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.solfacell.Order;
 import com.solfacell.PriceListActivity;
 import com.solfacell.R;
 import com.solfacell.fragments.GameFragments;
@@ -25,9 +26,10 @@ public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.View
     private PriceListActivity mContext;
     private String harga;
     private String nama;
-    public AdapterPriceList(List<PriceList.Voucher> voucher) {
+    private Activity mActivity;
+    public AdapterPriceList(List<PriceList.Voucher> voucher, Activity activity) {
         this.voucher = voucher;
-
+        mActivity = activity;
     }
 
     @Override
@@ -45,9 +47,13 @@ public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.View
         viewHolder.tv_harga.setText("Rp "+vcr.getHarga());
         nama = vcr.getNama();
         harga = vcr.getHarga();
-
-
-
+        viewHolder.listItem.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent i = new Intent(mActivity, Order.class);
+                mActivity.startActivity(i);
+            }
+        });
 
     }
 
@@ -58,14 +64,12 @@ public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.View
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         private TextView tv_nama, tv_harga;
+        private View listItem;
         public ViewHolder(View view) {
             super(view);
-
+            listItem = (View) view.findViewById(R.id.list_item);
             tv_nama = (TextView)view.findViewById(R.id.text_nama);
             tv_harga = (TextView)view.findViewById(R.id.text_harga);
-
-
-
 
             };
         }

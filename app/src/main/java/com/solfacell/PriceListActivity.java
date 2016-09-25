@@ -3,6 +3,7 @@ package com.solfacell;
 /**
  * Created by Ratri on 9/22/2016.
  */
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -43,6 +44,7 @@ public class PriceListActivity extends AppCompatActivity
     private SharedPreferences pref;
     public TextView yourname;
     public TextView welcome;
+    private Activity mActivity;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,6 +59,7 @@ public class PriceListActivity extends AppCompatActivity
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        mActivity = this;
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
@@ -148,7 +151,7 @@ public class PriceListActivity extends AppCompatActivity
                     System.out.println(voucher.getNama());
                 }
 
-                adapter = new AdapterPriceList(data);
+                adapter = new AdapterPriceList(data, mActivity);
                 recyclerView.setAdapter(adapter);
             }
 
