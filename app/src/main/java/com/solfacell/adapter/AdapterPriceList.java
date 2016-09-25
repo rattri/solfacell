@@ -9,6 +9,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
 
+
 import com.solfacell.R;
 import com.solfacell.model.PriceList;
 
@@ -32,8 +33,8 @@ public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.View
         String idr;
         idr="IDR ";
         PriceList.Voucher vcr = voucher.get(i);
-        viewHolder.tv_nama.setText(vcr.getNama());
-        viewHolder.tv_harga.setText(vcr.getHarga());
+        viewHolder.tv_nama.setText("IDR "+vcr.getNama());
+        viewHolder.tv_harga.setText("Rp "+vcr.getHarga());
 
 
     }

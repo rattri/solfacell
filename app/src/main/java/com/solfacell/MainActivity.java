@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
+import android.support.v7.app.AlertDialog;
 import android.util.Log;
 import android.view.MenuInflater;
 import android.view.View;
@@ -173,7 +174,23 @@ public class MainActivity extends AppCompatActivity
 
         if (id == R.id.beranda) {
             // Handle the camera action
-        } else if (id == R.id.login) {
+        }
+        else if (id == R.id.logout){
+            SharedPreferences.Editor editor = pref.edit();
+            editor.putBoolean(Constants.IS_LOGGED_IN,false);
+            editor.putString(Constants.EMAIL,"");
+            editor.putString(Constants.NAME,"");
+            editor.putString(Constants.UNIQUE_ID,"");
+            editor.apply();
+
+            new AlertDialog.Builder(this)
+                    .setTitle("Logout")
+                    .setMessage("Kamu berhasil logout")
+                    .show();
+            Intent i = new Intent(this,  MainActivity.class);
+            startActivity(i);
+        }
+        else if (id == R.id.login) {
             Intent i = new Intent(this,  LoginActivity.class);
             startActivity(i);
         }
@@ -181,6 +198,16 @@ public class MainActivity extends AppCompatActivity
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;
+    }
+
+    private void logout() {
+        SharedPreferences.Editor editor = pref.edit();
+        editor.putBoolean(Constants.IS_LOGGED_IN,false);
+        editor.putString(Constants.EMAIL,"");
+        editor.putString(Constants.NAME,"");
+        editor.putString(Constants.UNIQUE_ID,"");
+        editor.apply();
+
     }
 
 

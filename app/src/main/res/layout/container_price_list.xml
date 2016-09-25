@@ -4,9 +4,48 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:orientation="horizontal"
+        android:paddingLeft="16dp"
+        android:paddingBottom="10dp"
+        android:background="#e7e1e1"
+        android:layout_marginLeft="20dp"
+        android:layout_marginTop="2dp"
+        android:layout_marginRight="20dp"
+        android:layout_marginBottom="2dp">
+
+        <TextView
+            android:id="@+id/text_nama"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:textColor="#0b0b0b"
+            android:text="Seri Voucher"
+            android:paddingTop="8dp"
+            android:width="170dp"
+            android:textAppearance="?android:attr/textAppearanceSmall"/>
+
+        <TextView
+            android:id="@+id/text_harga"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Harga"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:textColor="#0b0b0b"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp" />
+
+    </LinearLayout>
+
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recycler_view"
+
         android:layout_width="match_parent"
-        android:layout_height="match_parent" >
+        android:layout_height="match_parent"
+        android:divider="@drawable/dashed"
+        android:dividerHeight="2dp">
     </android.support.v7.widget.RecyclerView>
 </RelativeLayout>
