@@ -3,6 +3,8 @@ package com.solfacell.adapter;
 /**
  * Created by Ratri on 9/20/2016.
  */
+import android.app.Activity;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -10,13 +12,16 @@ import android.view.ViewGroup;
 import android.widget.TextView;
 
 
+import com.solfacell.PriceListActivity;
 import com.solfacell.R;
+import com.solfacell.fragments.GameFragments;
 import com.solfacell.model.PriceList;
 
 import java.util.List;
 
 public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.ViewHolder> {
     private List<PriceList.Voucher> voucher;
+    private PriceListActivity mContext;
 
     public AdapterPriceList(List<PriceList.Voucher> voucher) {
         this.voucher = voucher;
@@ -37,6 +42,8 @@ public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.View
         viewHolder.tv_harga.setText("Rp "+vcr.getHarga());
 
 
+
+
     }
 
     @Override
@@ -52,8 +59,10 @@ public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.View
             tv_nama = (TextView)view.findViewById(R.id.text_nama);
             tv_harga = (TextView)view.findViewById(R.id.text_harga);
 
+
+
+            };
         }
     }
-}
 
 
