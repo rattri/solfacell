@@ -45,12 +45,16 @@ public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.View
         PriceList.Voucher vcr = voucher.get(i);
         viewHolder.tv_nama.setText("IDR "+vcr.getNama());
         viewHolder.tv_harga.setText("Rp "+vcr.getHarga());
-        nama = vcr.getNama();
-        harga = vcr.getHarga();
+
         viewHolder.listItem.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 Intent i = new Intent(mActivity, Order.class);
+                Bundle b = new Bundle ();
+                b.putString("nama", nama);
+                b.putString("harga", harga);
+                i.putExtras(b);
                 mActivity.startActivity(i);
             }
         });
@@ -70,6 +74,7 @@ public class AdapterPriceList extends RecyclerView.Adapter<AdapterPriceList.View
             listItem = (View) view.findViewById(R.id.list_item);
             tv_nama = (TextView)view.findViewById(R.id.text_nama);
             tv_harga = (TextView)view.findViewById(R.id.text_harga);
+
 
             };
         }

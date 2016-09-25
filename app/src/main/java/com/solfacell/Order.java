@@ -1,99 +1,85 @@
 package com.solfacell;
 
+/**
+ * Created by Ratri on 9/22/2016.
+ */
+import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
-import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.NavigationView;
-import android.support.design.widget.Snackbar;
-import android.support.design.widget.TabLayout;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.GravityCompat;
-import android.support.v4.view.ViewPager;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
-import com.solfacell.fragments.GameFragments;
-import com.solfacell.fragments.PlnFragments;
-import com.solfacell.fragments.PulsaFragments;
+import com.solfacell.adapter.AdapterPriceList;
+import com.solfacell.model.PriceList;
+import com.solfacell.retrofitinterface.RequestInterface;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Ratri on 9/25/2016.
- */
-public class Order  extends AppCompatActivity
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
+
+public class Order extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
-
-    private Toolbar toolbar;
-    private TabLayout tabLayout;
-    private ViewPager viewPager;
-    private SharedPreferences pref;
-    public TextView yourname;
-    public TextView welcome;
-
     NavigationView navigationView;
-
-    private int[] tabIcons = {
-
-            R.drawable.gamepad,
-            R.drawable.smartphone,
-
-            R.drawable.pln,
-            R.drawable.wifi,
-    };
+    private SharedPreferences pref;
+    public TextView produk, jumlah, total, harga, welcome;
+    String sproduk, sharga, snama;
+    int  vjumlah, vtotal, vharga;
+    Button tambah, kurang, beli;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_main);
+        setContentView(R.layout.activity_order);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-//        pref = getPreferences(0);
         pref = getSharedPreferences(Constants.LOGIN_OPERATION, Context.MODE_PRIVATE);
-
-        viewPager = (ViewPager) findViewById(R.id.viewpager);
-        setupViewPager(viewPager);
-
-        tabLayout = (TabLayout) findViewById(R.id.tabs);
-        tabLayout.setupWithViewPager(viewPager);
-        setupTabIcons();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
         drawer.setDrawerListener(toggle);
         toggle.syncState();
 
+        Bundle b = getIntent().getExtras();
+        snama = b.getString("nama");
+        sharga = b.getString("harga");
+
 
         navigationView = (NavigationView) findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
         View header = navigationView.getHeaderView(0);
         welcome = (TextView) header.findViewById(R.id.welcome);
-        setupMenuView();
-    }
 
+        produk = (TextView) findViewById(R.id.produk);
+        harga = (TextView) findViewById(R.id.harga);
+        jumlah = (TextView) findViewById(R.id.jumlah);
+        total = (TextView) findViewById(R.id.total);
+
+        produk.setText("Steam Wallet Code "+ snama);
+        harga.setText("Harga : "+ sharga);
+
+
+        setupMenuView();
+
+    }
     private void setupMenuView(){
         if (!pref.getBoolean(Constants.IS_LOGGED_IN, false)) {
             navigationView.inflateMenu(R.menu.login);
@@ -103,52 +89,6 @@ public class Order  extends AppCompatActivity
             welcome.setText("Selamat Datang "+ pref.getString(Constants.NAME, ""));
         }
     }
-
-    private void setupTabIcons() {
-        tabLayout.getTabAt(0).setIcon(tabIcons[0]);
-        tabLayout.getTabAt(1).setIcon(tabIcons[1]);
-        tabLayout.getTabAt(2).setIcon(tabIcons[2]);
-        tabLayout.getTabAt(3).setIcon(tabIcons[3]);
-
-    }
-    private void setupViewPager(ViewPager viewPager) {
-        ViewPagerAdapter adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        adapter.addFragment(new GameFragments(), "Game");
-        adapter.addFragment(new PulsaFragments(), "Pulsa");
-        adapter.addFragment(new PlnFragments(), "PLN");
-        adapter.addFragment(new PlnFragments(), "Data");
-        viewPager.setAdapter(adapter);
-    }
-
-    class ViewPagerAdapter extends FragmentPagerAdapter {
-        private final List<Fragment> mFragmentList = new ArrayList<>();
-        private final List<String> mFragmentTitleList = new ArrayList<>();
-
-        public ViewPagerAdapter(FragmentManager manager) {
-            super(manager);
-        }
-
-        @Override
-        public Fragment getItem(int position) {
-            return mFragmentList.get(position);
-        }
-
-        @Override
-        public int getCount() {
-            return mFragmentList.size();
-        }
-
-        public void addFragment(Fragment fragment, String title) {
-            mFragmentList.add(fragment);
-            mFragmentTitleList.add(title);
-        }
-
-        @Override
-        public CharSequence getPageTitle(int position) {
-            return mFragmentTitleList.get(position);
-        }
-    }
-
 
     @Override
     public void onBackPressed() {
@@ -199,13 +139,5 @@ public class Order  extends AppCompatActivity
         return true;
     }
 
-    private void logout() {
-        SharedPreferences.Editor editor = pref.edit();
-        editor.putBoolean(Constants.IS_LOGGED_IN,false);
-        editor.putString(Constants.EMAIL,"");
-        editor.putString(Constants.NAME,"");
-        editor.putString(Constants.UNIQUE_ID,"");
-        editor.apply();
 
-    }
 }
