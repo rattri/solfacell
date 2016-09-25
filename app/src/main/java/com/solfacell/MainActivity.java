@@ -165,10 +165,10 @@ public class MainActivity extends AppCompatActivity
             return true;
         }
         else{
-        // Inflate the menu; this adds items to the action bar if it is present.
+            // Inflate the menu; this adds items to the action bar if it is present.
             menu.findItem(R.id.login).setVisible(false);
             welcome.setText(   "Selamat Datang "+ pref.getString(Constants.NAME, ""));
-        return true;}
+            return true;}
     }
 
 
