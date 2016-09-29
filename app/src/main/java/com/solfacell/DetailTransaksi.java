@@ -34,7 +34,7 @@ import com.solfacell.fragments.GameFragments;
 import com.solfacell.fragments.PlnFragments;
 import com.solfacell.fragments.PulsaFragments;
 
-public class Transaksi extends AppCompatActivity
+public class DetailTransaksi extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     private Toolbar toolbar;
